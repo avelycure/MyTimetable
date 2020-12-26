@@ -1,6 +1,7 @@
 package com.bignerdranch.android.mytimetable;
 import java.util.Calendar;
 
+//Class for working with time
 public class Time {
     private Calendar myCalendar;
 
