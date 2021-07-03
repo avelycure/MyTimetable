@@ -11,10 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.mytimetable.LessonModel;
 import com.bignerdranch.android.mytimetable.R;
-import com.bignerdranch.android.mytimetable.model.TimeTableModel;
-import com.bignerdranch.android.mytimetable.model.TimetableData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
