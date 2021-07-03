@@ -1,6 +1,8 @@
 package com.bignerdranch.android.mytimetable;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,13 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private Button btnNext;
     private Button btnBack;
 
-    TimeTableViewModel timeTableViewModel = new TimeTableViewModel();
     private List<LessonModel> lessonModels;
+    private MainActivityViewModel timeTableViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        timeTableViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class );
 
         time = new TimeTableModel();
 
