@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bignerdranch.android.mytimetable.util.AdapterForCards;
+
 
 public class TimeTableFragment extends Fragment {
     Time fragTime;
