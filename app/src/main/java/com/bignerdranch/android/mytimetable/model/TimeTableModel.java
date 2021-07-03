@@ -1,10 +1,15 @@
 package com.bignerdranch.android.mytimetable.model;
-import com.bignerdranch.android.mytimetable.timetable.Timetable;
 
+import android.util.Log;
+
+import com.bignerdranch.android.mytimetable.LessonModel;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 //Class for working with time
-public class Time {
+public class TimeTableModel implements Repository {
     private Calendar myCalendar;
 
     private String month;//название месяца
@@ -24,16 +29,16 @@ public class Time {
     public final int HOUR;
     public final int MINUTE;
 
-    public Time(){
+    public TimeTableModel() {
         myCalendar = Calendar.getInstance();
         TODAY = myCalendar.get(Calendar.DAY_OF_YEAR);
         MONTH = myCalendar.get(Calendar.MONTH);
-        MINUTE =myCalendar.get(Calendar.MINUTE);
-        HOUR =myCalendar.get(Calendar.HOUR_OF_DAY);
+        MINUTE = myCalendar.get(Calendar.MINUTE);
+        HOUR = myCalendar.get(Calendar.HOUR_OF_DAY);
         UpdateFields();
     }
 
-    public void UpdateFields(){
+    public void UpdateFields() {
         setMonthNum();
         setMonth(monthNum);
         setFirstDayOfMonth();
@@ -43,6 +48,7 @@ public class Time {
         setDayOfWeekNum();
         setWeekType();
     }
+
     public void setDayInTimetable() {
         dayInTimetable = myCalendar.get(Calendar.DAY_OF_YEAR);
     }
@@ -67,8 +73,8 @@ public class Time {
         lastDayOfMonth = myCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
-    public void changeMyCalendar(int addDay){
-        myCalendar.add(Calendar.DAY_OF_MONTH,addDay);
+    public void changeMyCalendar(int addDay) {
+        myCalendar.add(Calendar.DAY_OF_MONTH, addDay);
         UpdateFields();
     }
 
@@ -95,10 +101,44 @@ public class Time {
     }
 
     public void setMonth(int monthNum) {
-        this.month = Timetable.months[monthNum];
+        this.month = TimetableData.months[monthNum];
     }
 
     public void setMonthNum() {
         monthNum = myCalendar.get(Calendar.MONTH);
+    }
+
+    public List<LessonModel> fillLessonModel() {
+        int arraySize;
+        if (weekType == 0)
+            arraySize = TimetableData.lessonsCh[dayOfWeekNum].length;
+        else
+            arraySize = TimetableData.lessonsZn[dayOfWeekNum].length;
+
+        List<LessonModel> lessonModelList = new ArrayList<>(arraySize);
+
+        for (int i = 0; i < arraySize; i++) {
+            if (weekType == 0)
+                lessonModelList.add(new
+                        LessonModel(TimetableData.lessonsBegin[i][0] + ":" + TimetableData.lessonsBegin[i][1],
+                        TimetableData.lessonsEnd[i][0] + ":" + TimetableData.lessonsEnd[i][1],
+                        TimetableData.lessonsCh[dayOfWeekNum][i],
+                        isCurrentLesson(i)));
+            else
+                lessonModelList.add(new LessonModel(
+                        TimetableData.lessonsBegin[i][0] + ":" + TimetableData.lessonsBegin[i][1],
+                        TimetableData.lessonsEnd[i][0] + ":" + TimetableData.lessonsEnd[i][1],
+                        TimetableData.lessonsZn[dayOfWeekNum][i],
+                        isCurrentLesson(i)));
+        }
+        return lessonModelList;
+    }
+
+    private boolean isCurrentLesson(int position) {
+        if ((MINUTE + HOUR * 60 > TimetableData.lessonsBeginInMinute[position] - 10) &&
+                (MINUTE + HOUR * 60 <= TimetableData.lessonsEndInMinute[position]) &&
+                (dayInTimetable == TODAY))
+            return true;
+        else return false;
     }
 }

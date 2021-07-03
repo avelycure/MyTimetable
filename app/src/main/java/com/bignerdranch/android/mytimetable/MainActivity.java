@@ -6,34 +6,40 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bignerdranch.android.mytimetable.model.Time;
-import com.bignerdranch.android.mytimetable.timetable.Timetable;
+import com.bignerdranch.android.mytimetable.model.TimeTableModel;
+import com.bignerdranch.android.mytimetable.model.TimetableData;
 import com.bignerdranch.android.mytimetable.util.AdapterForCards;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private final int USERID = 6000;
-    private Time time;
-    AdapterForCards adapter;
+    private TimeTableModel time;
+    private AdapterForCards adapter;
 
     private TextView myDate1;
     private TextView myDate2;
     private TextView tvWeekDay;
-    private RecyclerView myrec;
+    private RecyclerView rv;
     private Button btnNext;
     private Button btnBack;
+
+    TimeTableViewModel timeTableViewModel = new TimeTableViewModel();
+    private List<LessonModel> lessonModels;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        time = new Time();
+        time = new TimeTableModel();
 
         getReferences();
 
@@ -43,16 +49,16 @@ public class MainActivity extends AppCompatActivity {
 
         showWeekDay(this);
 
-        myrec = (RecyclerView) findViewById(R.id.time_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        myrec.setLayoutManager(layoutManager);
+        rv.setLayoutManager(layoutManager);
 
-        adapter = new AdapterForCards(time, this);
-        myrec.setAdapter(adapter);
+        lessonModels = time.fillLessonModel();
+        adapter = new AdapterForCards(this, lessonModels);
+        rv.setAdapter(adapter);
     }
 
-    //Getting referencies to all components of activity
     public void getReferences() {
+        rv = findViewById(R.id.time_recycler);
         myDate1 = findViewById(R.id.date_text1);
         myDate2 = findViewById(R.id.date_text2);
         btnBack = findViewById(R.id.date_back);
@@ -62,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     //Setting date and day of week
     public void setText() {
         myDate1.setText(time.getDayOfMonth() + " " + time.getMonth());
-        myDate2.setText(Timetable.days[time.getDayOfWeekNum()]);
+        myDate2.setText(TimetableData.days[time.getDayOfWeekNum()]);
     }
 
     //Setting listeners on buttons
@@ -75,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 time.changeMyCalendar(-1);
                 setText();
                 showWeekDay(context);
+                adapter.setLessonModelsList(time.fillLessonModel());
                 adapter.notifyDataSetChanged();
             }
         });
@@ -86,14 +93,15 @@ public class MainActivity extends AppCompatActivity {
                 time.changeMyCalendar(1);
                 setText();
                 showWeekDay(context);
+                adapter.setLessonModelsList(time.fillLessonModel());
                 adapter.notifyDataSetChanged();
             }
         });
     }
 
     private void showWeekDay(Context context) {
-        if (time.getWeekType() == 0 && Timetable.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
-                time.getWeekType() == 1 && Timetable.lessonsZn[time.getDayOfWeekNum()].length == 0) {
+        if (time.getWeekType() == 0 && TimetableData.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
+                time.getWeekType() == 1 && TimetableData.lessonsZn[time.getDayOfWeekNum()].length == 0) {
             tvWeekDay = findViewById(USERID);
 
             tvWeekDay = new TextView(context);
@@ -111,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkForWeekDay() {
-        if (time.getWeekType() == 0 && Timetable.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
-                time.getWeekType() == 1 && Timetable.lessonsZn[time.getDayOfWeekNum()].length == 0) {
+        if (time.getWeekType() == 0 && TimetableData.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
+                time.getWeekType() == 1 && TimetableData.lessonsZn[time.getDayOfWeekNum()].length == 0) {
             tvWeekDay = findViewById(USERID);
         }
     }
