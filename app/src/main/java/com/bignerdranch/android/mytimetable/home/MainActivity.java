@@ -1,4 +1,4 @@
-package com.bignerdranch.android.mytimetable;
+package com.bignerdranch.android.mytimetable.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bignerdranch.android.mytimetable.model.LessonModel;
+import com.bignerdranch.android.mytimetable.R;
 import com.bignerdranch.android.mytimetable.util.AdapterForCards;
 
 import java.util.List;

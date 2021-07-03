@@ -1,13 +1,10 @@
-package com.bignerdranch.android.mytimetable;
-
-import android.content.Context;
-import android.util.Log;
-import android.widget.TextView;
+package com.bignerdranch.android.mytimetable.home;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bignerdranch.android.mytimetable.model.LessonModel;
 import com.bignerdranch.android.mytimetable.model.TimetableData;
 import com.bignerdranch.android.mytimetable.model.TimetableRepository;
 

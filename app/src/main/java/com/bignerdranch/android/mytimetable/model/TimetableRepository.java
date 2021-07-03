@@ -1,7 +1,5 @@
 package com.bignerdranch.android.mytimetable.model;
 
-import com.bignerdranch.android.mytimetable.LessonModel;
-
 import java.util.Calendar;
 import java.util.List;
 
