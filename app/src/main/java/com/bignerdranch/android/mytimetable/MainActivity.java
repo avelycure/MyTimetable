@@ -17,18 +17,19 @@ import com.bignerdranch.android.mytimetable.timetable.Timetable;
 import com.bignerdranch.android.mytimetable.util.OnSwipeTouchListener;
 
 public class MainActivity extends AppCompatActivity {
+    private final int USERID = 6000;
+    private Time time;
+
     TimeTableFragment myFragment;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     LinearLayout linearLayoutMain;
     LinearLayout linearLayoutContainer;
-
     private TextView myDate1;
     private TextView myDate2;
+    private TextView tvWeekDay;
     private Button btnNext;
     private Button btnBack;
-    private Time time;
-    TextView tvWeekDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
         time = new Time();
 
-        GetReferences();//Getting referencies to all components of activity
+        getReferences();
 
-        SetText();//Setting date and day of week
+        setText();
 
-        SetListeners(this);//Setting listeners on buttons
+        setListeners(this);
 
         hideSystemUI();
         ShowWeekDay(this);
     }
 
-    public void GetReferences() {
+    //Getting referencies to all components of activity
+    public void getReferences() {
 
         myDate1 = findViewById(R.id.date_text1);
         myDate2 = findViewById(R.id.date_text2);
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public void EUpdateFragment() {
+    public void updateFragment() {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(myFragment);
@@ -73,21 +75,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    //Установка даты в верхнем окне
-    public void SetText() {
+    //Setting date and day of week
+    public void setText() {
         myDate1.setText(time.getDayOfMonth() + " " + time.getMonth());
         myDate2.setText(Timetable.days[time.getDayOfWeekNum()]);
     }
 
-    //Установка слушателей на кнопки
-    public void SetListeners(final Context context) {
+    //Setting listeners on buttons
+    public void setListeners(final Context context) {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CheckForWeekDay();
+                checkForWeekDay();
                 time.ChangeMyCalendar(-1);
-                SetText();
-                EUpdateFragment();//Обновление фрагмента после изменения даты
+                setText();
+                updateFragment();//Обновление фрагмента после изменения даты
                 ShowWeekDay(context);
             }
         });
@@ -95,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CheckForWeekDay();
+                checkForWeekDay();
                 time.ChangeMyCalendar(1);
-                SetText();
-                EUpdateFragment();
+                setText();
+                updateFragment();
                 ShowWeekDay(context);
             }
         });
@@ -137,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
-    private final int USERID = 6000;
 
     private void ShowWeekDay(Context context) {
         if (time.getWeekType() == 0 && Timetable.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void CheckForWeekDay() {
+    private void checkForWeekDay() {
         if (time.getWeekType() == 0 && Timetable.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
             time.getWeekType() == 1 && Timetable.lessonsZn[time.getDayOfWeekNum()].length == 0) {
             tvWeekDay = findViewById(USERID);
