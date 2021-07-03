@@ -6,22 +6,20 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.bignerdranch.android.mytimetable.util.AdapterForCards;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private final int USERID = 6000;
     private AdapterForCards adapter;
 
     private TextView myDate1;
     private TextView myDate2;
-    private TextView tvWeekDay;
     private RecyclerView rv;
     private Button btnNext;
     private Button btnBack;
@@ -35,11 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         getReferences();
 
-        setText();
-
-        setListeners(this);
-
-        //showWeekDay(this);
+        setListeners();
 
         timeTableViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class );
 
@@ -80,58 +74,20 @@ public class MainActivity extends AppCompatActivity {
         btnNext = findViewById(R.id.date_next);
     }
 
-    //Setting date and day of week
-    public void setText() {
-    }
-
-    //Setting listeners on buttons
-    public void setListeners(final Context context) {
+    public void setListeners() {
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //checkForWeekDay();
                 timeTableViewModel.prevDay();
-                setText();
-                //showWeekDay(context);
             }
         });
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //checkForWeekDay();
                 timeTableViewModel.nextDay();
-                setText();
-                //showWeekDay(context);
             }
         });
     }
-
-    /*private void showWeekDay(Context context) {
-        if (time.getWeekType() == 0 && TimetableData.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
-                time.getWeekType() == 1 && TimetableData.lessonsZn[time.getDayOfWeekNum()].length == 0) {
-            tvWeekDay = findViewById(USERID);
-
-            tvWeekDay = new TextView(context);
-            tvWeekDay.setText("Выходной");
-            tvWeekDay.setId(USERID);
-            tvWeekDay.setLayoutParams(
-                    new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT)
-            );
-            tvWeekDay.setTextColor(getResources().getColor(R.color.colortextViewMain));
-            tvWeekDay.setTextSize(34);
-            tvWeekDay.setGravity(Gravity.CENTER);
-        }
-    }
-
-    private void checkForWeekDay() {
-        if (time.getWeekType() == 0 && TimetableData.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
-                time.getWeekType() == 1 && TimetableData.lessonsZn[time.getDayOfWeekNum()].length == 0) {
-            tvWeekDay = findViewById(USERID);
-        }
-    }*/
-
 }

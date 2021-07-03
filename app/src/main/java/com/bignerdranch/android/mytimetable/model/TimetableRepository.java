@@ -1,12 +1,7 @@
 package com.bignerdranch.android.mytimetable.model;
 
-import android.util.Log;
-
-import androidx.lifecycle.MutableLiveData;
-
 import com.bignerdranch.android.mytimetable.LessonModel;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -109,34 +104,6 @@ public class TimetableRepository implements Repository {
     public void setMonthNum() {
         monthNum = myCalendar.get(Calendar.MONTH);
     }
-
-    /*public List<LessonModel> fillLessonModel() {
-        int arraySize;
-        if (weekType == 0)
-            arraySize = TimetableData.lessonsCh[dayOfWeekNum].length;
-        else
-            arraySize = TimetableData.lessonsZn[dayOfWeekNum].length;
-
-        List<LessonModel> lessonModelList = new ArrayList<>(arraySize);
-
-        for (int i = 0; i < arraySize; i++) {
-            if (weekType == 0)
-                lessonModelList.add(new
-                        LessonModel(TimetableData.lessonsBegin[i][0] + ":" + TimetableData.lessonsBegin[i][1],
-                        TimetableData.lessonsEnd[i][0] + ":" + TimetableData.lessonsEnd[i][1],
-                        TimetableData.lessonsCh[dayOfWeekNum][i],
-                        isCurrentLesson(i)));
-            else
-                lessonModelList.add(new LessonModel(
-                        TimetableData.lessonsBegin[i][0] + ":" + TimetableData.lessonsBegin[i][1],
-                        TimetableData.lessonsEnd[i][0] + ":" + TimetableData.lessonsEnd[i][1],
-                        TimetableData.lessonsZn[dayOfWeekNum][i],
-                        isCurrentLesson(i)));
-        }
-
-        Log.d("mytag","" + lessonModelList.get(1).getLessonName());
-        return lessonModelList;
-    }*/
 
     public void updateLessons(List<LessonModel> list) {
         int arraySize;

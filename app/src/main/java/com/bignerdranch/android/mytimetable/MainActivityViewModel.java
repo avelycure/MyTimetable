@@ -1,6 +1,8 @@
 package com.bignerdranch.android.mytimetable;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -66,4 +68,8 @@ public class MainActivityViewModel extends ViewModel {
         updateUI();
     }
 
+    public boolean isWeekend(){
+        return (timeRepo.getWeekType() == 0 && TimetableData.lessonsCh[timeRepo.getDayOfWeekNum()].length == 0 ||
+                timeRepo.getWeekType() == 1 && TimetableData.lessonsZn[timeRepo.getDayOfWeekNum()].length == 0);
+    }
 }
