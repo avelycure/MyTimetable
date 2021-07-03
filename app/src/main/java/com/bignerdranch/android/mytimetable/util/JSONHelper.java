@@ -1,4 +1,4 @@
-package com.bignerdranch.android.mytimetable;
+package com.bignerdranch.android.mytimetable.util;
 
 import android.content.Context;
 import android.widget.TextView;

@@ -6,14 +6,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.View.OnTouchListener;
-import android.widget.Toast;
+
+import com.bignerdranch.android.mytimetable.model.Time;
+import com.bignerdranch.android.mytimetable.timetable.Timetable;
+import com.bignerdranch.android.mytimetable.util.OnSwipeTouchListener;
 
 public class MainActivity extends AppCompatActivity {
     TimeTableFragment myFragment;
