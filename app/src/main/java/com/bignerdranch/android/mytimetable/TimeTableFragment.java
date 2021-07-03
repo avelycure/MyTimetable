@@ -16,20 +16,12 @@ import com.bignerdranch.android.mytimetable.util.AdapterForCards;
 
 public class TimeTableFragment extends Fragment {
     Time fragTime;
-    @Override
+    /*@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       RecyclerView myrec = (RecyclerView)inflater.inflate(
-                R.layout.fragment_time_table, container, false);
-        AdapterForCards adapter = new AdapterForCards(fragTime, getContext());
 
-        if (adapter.getItemCount() != 0){
-            myrec.setAdapter(adapter);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            myrec.setLayoutManager(layoutManager);
-        }
-        return myrec;
-    }
+        return ;
+    }*/
     public TimeTableFragment(Time time){
         this.fragTime = time;
     }
