@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnNext;
     private Button btnBack;
 
-    private List<LessonModel> lessonModels;
     private MainActivityViewModel timeTableViewModel;
 
     @Override
@@ -53,6 +52,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        timeTableViewModel.getNumber().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                myDate1.setText(timeTableViewModel.getNumber().getValue());
+            }
+        });
+
+        timeTableViewModel.getWeekDay().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                myDate2.setText(timeTableViewModel.getWeekDay().getValue());
+            }
+        });
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
         adapter = new AdapterForCards(this, timeTableViewModel.getLessons().getValue());
@@ -69,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Setting date and day of week
     public void setText() {
-        //myDate1.setText(time.getDayOfMonth() + " " + time.getMonth());
-        //myDate2.setText(TimetableData.days[time.getDayOfWeekNum()]);
     }
 
     //Setting listeners on buttons
@@ -83,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 timeTableViewModel.prevDay();
                 setText();
                 //showWeekDay(context);
-                //adapter.setLessonModelsList(time.fillLessonModel());
             }
         });
 
@@ -91,11 +101,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //checkForWeekDay();
-                //time.changeMyCalendar(1);
                 timeTableViewModel.nextDay();
                 setText();
                 //showWeekDay(context);
-                //adapter.setLessonModelsList(time.fillLessonModel());
             }
         });
     }

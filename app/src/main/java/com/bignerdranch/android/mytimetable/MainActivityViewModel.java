@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.bignerdranch.android.mytimetable.model.TimetableData;
 import com.bignerdranch.android.mytimetable.model.TimetableRepository;
 
 import java.util.ArrayList;
@@ -15,6 +16,17 @@ public class MainActivityViewModel extends ViewModel {
 
     private MutableLiveData<List<LessonModel>> mLessons;
     private TimetableRepository timeRepo;
+
+    private MutableLiveData<String> weekDay;
+    private MutableLiveData<String> number;
+
+    public LiveData<String> getWeekDay() {
+        return weekDay;
+    }
+
+    public LiveData<String> getNumber() {
+        return number;
+    }
 
     public LiveData<List<LessonModel>> getLessons() {
         return mLessons;
@@ -26,13 +38,24 @@ public class MainActivityViewModel extends ViewModel {
         }
         timeRepo = new TimetableRepository();
         mLessons = new MutableLiveData<>();
+        weekDay = new MutableLiveData<>();
+        number = new MutableLiveData<>();
+
+
         List<LessonModel> lessonModelList = new ArrayList<>();
         mLessons.setValue(lessonModelList);
         timeRepo.updateLessons(mLessons.getValue());
+        updateUI();
     }
 
     public void nextDay() {
         timeRepo.changeMyCalendar(1);
+        updateUI();
+    }
+
+    private void updateUI() {
+        weekDay.setValue(timeRepo.getDayOfMonth() + " " + timeRepo.getMonth());
+        number.setValue(TimetableData.days[timeRepo.getDayOfWeekNum()]);
         List<LessonModel> currentLessons = getLessons().getValue();
         timeRepo.updateLessons(currentLessons);
         mLessons.postValue(currentLessons);
@@ -40,9 +63,7 @@ public class MainActivityViewModel extends ViewModel {
 
     public void prevDay() {
         timeRepo.changeMyCalendar(-1);
-        List<LessonModel> currentLessons = getLessons().getValue();
-        timeRepo.updateLessons(currentLessons);
-        mLessons.postValue(currentLessons);
+        updateUI();
     }
 
 }
