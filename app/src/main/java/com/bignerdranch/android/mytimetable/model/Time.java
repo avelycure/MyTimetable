@@ -67,8 +67,8 @@ public class Time {
         lastDayOfMonth = myCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
-    public void ChangeMyCalendar(int AddDay){
-        myCalendar.add(Calendar.DAY_OF_MONTH,AddDay);
+    public void changeMyCalendar(int addDay){
+        myCalendar.add(Calendar.DAY_OF_MONTH,addDay);
         UpdateFields();
     }
 

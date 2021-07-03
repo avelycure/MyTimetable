@@ -19,11 +19,12 @@ import com.bignerdranch.android.mytimetable.util.AdapterForCards;
 public class MainActivity extends AppCompatActivity {
     private final int USERID = 6000;
     private Time time;
+    AdapterForCards adapter;
 
-    LinearLayout linearLayoutContainer;
     private TextView myDate1;
     private TextView myDate2;
     private TextView tvWeekDay;
+    private RecyclerView myrec;
     private Button btnNext;
     private Button btnBack;
 
@@ -40,13 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
         setListeners(this);
 
-        ShowWeekDay(this);
+        showWeekDay(this);
 
-        RecyclerView myrec = (RecyclerView) findViewById(R.id.time_recycler);
+        myrec = (RecyclerView) findViewById(R.id.time_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         myrec.setLayoutManager(layoutManager);
 
-        AdapterForCards adapter = new AdapterForCards(time, this);
+        adapter = new AdapterForCards(time, this);
         myrec.setAdapter(adapter);
     }
 
@@ -66,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
 
     //Setting listeners on buttons
     public void setListeners(final Context context) {
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkForWeekDay();
-                time.ChangeMyCalendar(-1);
+                time.changeMyCalendar(-1);
                 setText();
-                ShowWeekDay(context);
+                showWeekDay(context);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -80,20 +83,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkForWeekDay();
-                time.ChangeMyCalendar(1);
+                time.changeMyCalendar(1);
                 setText();
-                ShowWeekDay(context);
+                showWeekDay(context);
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
-    private void ShowWeekDay(Context context) {
+    private void showWeekDay(Context context) {
         if (time.getWeekType() == 0 && Timetable.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
                 time.getWeekType() == 1 && Timetable.lessonsZn[time.getDayOfWeekNum()].length == 0) {
             tvWeekDay = findViewById(USERID);
-            if (tvWeekDay != null) {
-                linearLayoutContainer.removeView(tvWeekDay);
-            }
+
             tvWeekDay = new TextView(context);
             tvWeekDay.setText("Выходной");
             tvWeekDay.setId(USERID);
@@ -105,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             tvWeekDay.setTextColor(getResources().getColor(R.color.colortextViewMain));
             tvWeekDay.setTextSize(34);
             tvWeekDay.setGravity(Gravity.CENTER);
-            linearLayoutContainer.addView(tvWeekDay);
         }
     }
 
@@ -113,9 +114,6 @@ public class MainActivity extends AppCompatActivity {
         if (time.getWeekType() == 0 && Timetable.lessonsCh[time.getDayOfWeekNum()].length == 0 ||
                 time.getWeekType() == 1 && Timetable.lessonsZn[time.getDayOfWeekNum()].length == 0) {
             tvWeekDay = findViewById(USERID);
-            if (tvWeekDay != null) {
-                linearLayoutContainer.removeView(tvWeekDay);
-            }
         }
     }
 
