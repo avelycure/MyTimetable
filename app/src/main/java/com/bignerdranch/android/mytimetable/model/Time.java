@@ -1,4 +1,6 @@
-package com.bignerdranch.android.mytimetable;
+package com.bignerdranch.android.mytimetable.model;
+import com.bignerdranch.android.mytimetable.timetable.Timetable;
+
 import java.util.Calendar;
 
 //Class for working with time

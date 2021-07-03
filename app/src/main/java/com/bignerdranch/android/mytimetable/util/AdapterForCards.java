@@ -10,8 +10,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.mytimetable.R;
-import com.bignerdranch.android.mytimetable.Time;
-import com.bignerdranch.android.mytimetable.Timetable;
+import com.bignerdranch.android.mytimetable.model.Time;
+import com.bignerdranch.android.mytimetable.timetable.Timetable;
 
 
 public class AdapterForCards extends RecyclerView.Adapter<AdapterForCards.CardViewHolder>{

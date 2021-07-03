@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bignerdranch.android.mytimetable.model.Time;
 import com.bignerdranch.android.mytimetable.util.AdapterForCards;
 
 

@@ -1,4 +1,4 @@
-package com.bignerdranch.android.mytimetable;
+package com.bignerdranch.android.mytimetable.timetable;
 
 public class Timetable {
     private int date;
