@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,13 +19,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bignerdranch.android.mytimetable.R;
+import com.bignerdranch.android.mytimetable.data.TimetableData;
 import com.bignerdranch.android.mytimetable.refactor.RefactorActivity;
 
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
-    private AdapterForCards adapter;
-
     private TextView myDate1;
     private TextView myDate2;
     private RecyclerView rv;
@@ -31,20 +32,20 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnBack;
     private Toolbar toolbar;
 
+    private AdapterForCards adapter;
     private HomeActivityViewModel timeTableViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home__activity);
 
+        setContentView(R.layout.home__activity);
         getReferences();
         setListeners();
         setSupportActionBar(toolbar);
 
         timeTableViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
-
-        timeTableViewModel.init();
+        timeTableViewModel.init(new TimetableData(this));
 
         timeTableViewModel.getLessons().observe(this, new Observer<List<LessonModel>>() {
             @Override
@@ -81,14 +82,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setListeners() {
-
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 timeTableViewModel.prevDay();
             }
         });
-
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

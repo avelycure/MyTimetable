@@ -10,6 +10,7 @@ import java.util.List;
  * Class for working with time
  */
 public class TimetableRepository {
+    private TimetableData timetableData;
     private Calendar myCalendar;
 
     private String month;//название месяца
@@ -26,7 +27,8 @@ public class TimetableRepository {
     public final int HOUR;
     public final int MINUTE;
 
-    public TimetableRepository() {
+    public TimetableRepository(TimetableData timetableData) {
+        this.timetableData = timetableData;
         myCalendar = Calendar.getInstance();
         TODAY = myCalendar.get(Calendar.DAY_OF_YEAR);
         MONTH = myCalendar.get(Calendar.MONTH);
@@ -84,7 +86,7 @@ public class TimetableRepository {
     }
 
     public void setMonth(int monthNum) {
-        this.month = TimetableData.months[monthNum];
+        this.month = timetableData.months.get(monthNum);
     }
 
     public void setMonthNum() {
@@ -94,31 +96,31 @@ public class TimetableRepository {
     public void updateLessons(List<LessonModel> list) {
         int arraySize;
         if (weekType == 0)
-            arraySize = TimetableData.lessonsCh[dayOfWeekNum].length;
+            arraySize = timetableData.lessonsCh.get(dayOfWeekNum).size();
         else
-            arraySize = TimetableData.lessonsZn[dayOfWeekNum].length;
+            arraySize = timetableData.lessonsZn.get(dayOfWeekNum).size();
 
         list.clear();
 
         for (int i = 0; i < arraySize; i++) {
             if (weekType == 0)
                 list.add(new
-                        LessonModel(TimetableData.lessonsBegin[i][0] + ":" + TimetableData.lessonsBegin[i][1],
-                        TimetableData.lessonsEnd[i][0] + ":" + TimetableData.lessonsEnd[i][1],
-                        TimetableData.lessonsCh[dayOfWeekNum][i],
+                        LessonModel(timetableData.lessonsBegin[i][0] + ":" + timetableData.lessonsBegin[i][1],
+                        timetableData.lessonsEnd[i][0] + ":" + timetableData.lessonsEnd[i][1],
+                        timetableData.lessonsCh.get(dayOfWeekNum).get(i),
                         isCurrentLesson(i)));
             else
                 list.add(new LessonModel(
-                        TimetableData.lessonsBegin[i][0] + ":" + TimetableData.lessonsBegin[i][1],
-                        TimetableData.lessonsEnd[i][0] + ":" + TimetableData.lessonsEnd[i][1],
-                        TimetableData.lessonsZn[dayOfWeekNum][i],
+                        timetableData.lessonsBegin[i][0] + ":" + timetableData.lessonsBegin[i][1],
+                        timetableData.lessonsEnd[i][0] + ":" + timetableData.lessonsEnd[i][1],
+                        timetableData.lessonsZn.get(dayOfWeekNum).get(i),
                         isCurrentLesson(i)));
         }
     }
 
     private boolean isCurrentLesson(int position) {
-        if ((MINUTE + HOUR * 60 > TimetableData.lessonsBeginInMinute[position] - 10) &&
-                (MINUTE + HOUR * 60 <= TimetableData.lessonsEndInMinute[position]) &&
+        if ((MINUTE + HOUR * 60 > timetableData.lessonsBeginInMinute[position] - 10) &&
+                (MINUTE + HOUR * 60 <= timetableData.lessonsEndInMinute[position]) &&
                 (dayInTimetable == TODAY))
             return true;
         else return false;
