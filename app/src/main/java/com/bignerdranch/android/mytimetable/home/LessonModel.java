@@ -1,4 +1,4 @@
-package com.bignerdranch.android.mytimetable.model;
+package com.bignerdranch.android.mytimetable.home;
 
 public class LessonModel {
     private String beginTime;
