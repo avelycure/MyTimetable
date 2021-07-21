@@ -6,7 +6,9 @@ import com.bignerdranch.android.mytimetable.home.LessonModel;
 import java.util.Calendar;
 import java.util.List;
 
-//Class for working with time
+/**
+ * Class for working with time
+ */
 public class TimetableRepository {
     private Calendar myCalendar;
 
@@ -18,7 +20,6 @@ public class TimetableRepository {
 
     private int dayInTimetable;//день в году, чтобы иметь дату для отталкивания
     private int dayOfWeekNum;//номер дня недели
-    private String dayOfWeek;//название дня
 
     public final int TODAY;//день в году, чтобы иметь дату для отталкивания
     public final int MONTH;
@@ -53,10 +54,6 @@ public class TimetableRepository {
 
     public int getDayOfMonth() {
         return dayOfMonth;
-    }
-
-    public int getDayInTimetable() {
-        return dayInTimetable;
     }
 
     public void changeMyCalendar(int addDay) {
