@@ -1,17 +1,18 @@
 package com.bignerdranch.android.mytimetable.model;
 
+import com.bignerdranch.android.mytimetable.data.TimetableData;
+import com.bignerdranch.android.mytimetable.home.LessonModel;
+
 import java.util.Calendar;
 import java.util.List;
 
 //Class for working with time
-public class TimetableRepository implements Repository {
+public class TimetableRepository {
     private Calendar myCalendar;
 
     private String month;//название месяца
     private int monthNum;//номер месяца
     private int dayOfMonth;//день месяца
-    private int firstDayOfMonth;
-    private int lastDayOfMonth;
 
     private int weekType;//тип недели (числитель или знаменатель)
 
@@ -36,8 +37,6 @@ public class TimetableRepository implements Repository {
     public void UpdateFields() {
         setMonthNum();
         setMonth(monthNum);
-        setFirstDayOfMonth();
-        setLastDayOfMonth();
         setDayOfMonth();
         setDayInTimetable();
         setDayOfWeekNum();
@@ -58,14 +57,6 @@ public class TimetableRepository implements Repository {
 
     public int getDayInTimetable() {
         return dayInTimetable;
-    }
-
-    public void setFirstDayOfMonth() {
-        firstDayOfMonth = myCalendar.getActualMinimum(Calendar.DAY_OF_MONTH);
-    }
-
-    public void setLastDayOfMonth() {
-        lastDayOfMonth = myCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
     public void changeMyCalendar(int addDay) {

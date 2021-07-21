@@ -1,4 +1,4 @@
-package com.bignerdranch.android.mytimetable.util;
+package com.bignerdranch.android.mytimetable.home;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bignerdranch.android.mytimetable.model.LessonModel;
 import com.bignerdranch.android.mytimetable.R;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class AdapterForCards extends RecyclerView.Adapter<AdapterForCards.CardVi
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cv = (CardView) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.time_card, parent, false);
+                .inflate(R.layout.home__rv_card, parent, false);
         return new CardViewHolder(cv);
     }
 

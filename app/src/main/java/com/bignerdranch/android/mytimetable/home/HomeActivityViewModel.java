@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.bignerdranch.android.mytimetable.model.LessonModel;
-import com.bignerdranch.android.mytimetable.model.TimetableData;
+import com.bignerdranch.android.mytimetable.data.TimetableData;
 import com.bignerdranch.android.mytimetable.model.TimetableRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivityViewModel extends ViewModel {
+public class HomeActivityViewModel extends ViewModel {
 
     private MutableLiveData<List<LessonModel>> mLessons;
     private TimetableRepository timeRepo;

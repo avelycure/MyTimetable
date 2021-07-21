@@ -1,4 +1,4 @@
-package com.bignerdranch.android.mytimetable.model;
+package com.bignerdranch.android.mytimetable.data;
 
 public class TimetableData {
     private int date;
