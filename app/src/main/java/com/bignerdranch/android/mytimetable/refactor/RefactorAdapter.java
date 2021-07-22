@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -25,6 +26,11 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
 
     private static final int DAYS = 7;
     private Context context;
+    private boolean chChecked;
+
+    public void setChChecked(boolean chChecked) {
+        this.chChecked = chChecked;
+    }
 
     public RefactorAdapter(ArrayList<List<String>> lessonsCh, ArrayList<List<String>> lessonsZn,
                            ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd,
@@ -35,6 +41,7 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
         this.lessonsBegin = lessonsBegin;
         this.lessonsEnd = lessonsEnd;
         this.days = days;
+        chChecked = true;
     }
 
     public RefactorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,7 +66,12 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
 
         public void bind(int position) {
 
-            ElementAdapter elementAdapter = new ElementAdapter(lessonsCh.get(position), lessonsBegin, lessonsEnd);
+            ElementAdapter elementAdapter = new ElementAdapter(lessonsBegin, lessonsEnd);
+
+            if (chChecked)
+                elementAdapter.setLessons(lessonsCh.get(position));
+            else
+                elementAdapter.setLessons(lessonsZn.get(position));
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerViewElement.setLayoutManager(linearLayoutManager);

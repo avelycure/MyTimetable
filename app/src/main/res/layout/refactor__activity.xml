@@ -15,6 +15,29 @@
         android:background="@color/colorPrimaryDark"
         app:titleTextColor="@color/colorLayoutMain"/>
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/refactor_rg"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/refactor_rb_ch"
+            android:text="Числитель"
+            android:layout_marginEnd="24dp"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/refactor_rb_zn"
+            android:text="Знаменатель"
+            android:layout_marginStart="8dp"/>
+
+    </RadioGroup>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

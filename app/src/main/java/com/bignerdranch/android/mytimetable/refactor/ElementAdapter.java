@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,8 +19,11 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementV
     private ArrayList<List<String>> lessonsBegin;
     private ArrayList<List<String>> lessonsEnd;
 
-    public ElementAdapter(List<String> lessons, ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd) {
+    public void setLessons(List<String> lessons) {
         this.lessons = lessons;
+    }
+
+    public ElementAdapter(ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd) {
         this.lessonsBegin = lessonsBegin;
         this.lessonsEnd = lessonsEnd;
     }
