@@ -5,9 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bignerdranch.android.mytimetable.R;
 
 import java.util.ArrayList;
@@ -26,14 +28,14 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementV
 
     @Override
     public ElementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(parent.getContext()).
+        RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.refactor__rv_in_rv, null, false);
-        return new ElementViewHolder(linearLayout);
+        return new ElementViewHolder(relativeLayout);
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return lessons.size();
     }
 
     @Override
@@ -47,7 +49,9 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementV
         private TextView tvTimeEnd;
 
         public void bind(int position) {
-
+            editText.setText(lessons.get(position));
+            tvTimeBegin.setText(lessonsBegin.get(position).get(0) + ":" + lessonsBegin.get(position).get(1));
+            tvTimeEnd.setText(lessonsEnd.get(position).get(0) + ":" + lessonsEnd.get(position).get(1));
         }
 
         public ElementViewHolder(View itemView) {
