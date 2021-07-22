@@ -1,6 +1,5 @@
 package com.bignerdranch.android.mytimetable.refactor;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +27,7 @@ public class RefactorActivity extends AppCompatActivity {
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         List<RefactorListModel> refactorListModelList = new ArrayList<>();
-        RefactorAdapter refactorAdapter = new RefactorAdapter(refactorListModelList);
+        RefactorAdapter refactorAdapter = new RefactorAdapter(refactorListModelList, this);
 
         recyclerView.setAdapter(refactorAdapter);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -40,7 +39,7 @@ public class RefactorActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
