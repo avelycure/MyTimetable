@@ -10,7 +10,19 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bignerdranch.android.mytimetable.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementViewHolder> {
+    private List<String> lessons;
+    private ArrayList<List<String>> lessonsBegin;
+    private ArrayList<List<String>> lessonsEnd;
+
+    public ElementAdapter(List<String> lessons, ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd) {
+        this.lessons = lessons;
+        this.lessonsBegin = lessonsBegin;
+        this.lessonsEnd = lessonsEnd;
+    }
 
     @Override
     public ElementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -105,22 +105,22 @@ public class TimetableRepository {
         for (int i = 0; i < arraySize; i++) {
             if (weekType == 0)
                 list.add(new
-                        LessonModel(timetableData.lessonsBegin[i][0] + ":" + timetableData.lessonsBegin[i][1],
-                        timetableData.lessonsEnd[i][0] + ":" + timetableData.lessonsEnd[i][1],
+                        LessonModel(timetableData.lessonsBegin.get(i).get(0) + ":" + timetableData.lessonsBegin.get(i).get(1),
+                        timetableData.lessonsEnd.get(i).get(0) + ":" + timetableData.lessonsEnd.get(i).get(1),
                         timetableData.lessonsCh.get(dayOfWeekNum).get(i),
                         isCurrentLesson(i)));
             else
                 list.add(new LessonModel(
-                        timetableData.lessonsBegin[i][0] + ":" + timetableData.lessonsBegin[i][1],
-                        timetableData.lessonsEnd[i][0] + ":" + timetableData.lessonsEnd[i][1],
+                        timetableData.lessonsBegin.get(i).get(0) + ":" + timetableData.lessonsBegin.get(i).get(1),
+                        timetableData.lessonsEnd.get(i).get(0) + ":" + timetableData.lessonsEnd.get(i).get(1),
                         timetableData.lessonsZn.get(dayOfWeekNum).get(i),
                         isCurrentLesson(i)));
         }
     }
 
     private boolean isCurrentLesson(int position) {
-        if ((MINUTE + HOUR * 60 > timetableData.lessonsBeginInMinute[position] - 10) &&
-                (MINUTE + HOUR * 60 <= timetableData.lessonsEndInMinute[position]) &&
+        if ((MINUTE + HOUR * 60 > timetableData.lessonsBeginInMinute.get(position) - 10) &&
+                (MINUTE + HOUR * 60 <= timetableData.lessonsEndInMinute.get(position)) &&
                 (dayInTimetable == TODAY))
             return true;
         else return false;

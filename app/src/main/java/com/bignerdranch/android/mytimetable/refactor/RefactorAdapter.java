@@ -12,16 +12,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.mytimetable.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.RefactorViewHolder> {
-    private List<RefactorListModel> refactorListModels;
+    private ArrayList<List<String>> lessonsCh;
+    private ArrayList<List<String>> lessonsZn;
+    private ArrayList<List<String>> lessonsBegin;
+    private ArrayList<List<String>> lessonsEnd;
+
     private static final int DAYS = 7;
     private Context context;
 
-    public RefactorAdapter(List<RefactorListModel> refactorListModels, Context context) {
-        this.refactorListModels = refactorListModels;
+    public RefactorAdapter(ArrayList<List<String>> lessonsCh, ArrayList<List<String>> lessonsZn,
+                           ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd, Context context) {
+        this.lessonsCh = lessonsCh;
+        this.lessonsZn = lessonsZn;
         this.context = context;
+        this.lessonsBegin = lessonsBegin;
+        this.lessonsEnd = lessonsEnd;
     }
 
     public RefactorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,7 +53,9 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
         private RecyclerView recyclerViewElement;
 
         public void bind(int position) {
-            ElementAdapter elementAdapter = new ElementAdapter();
+
+            ElementAdapter elementAdapter = new ElementAdapter(lessonsCh.get(position), lessonsBegin, lessonsEnd);
+
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerViewElement.setLayoutManager(linearLayoutManager);
             recyclerViewElement.setAdapter(elementAdapter);

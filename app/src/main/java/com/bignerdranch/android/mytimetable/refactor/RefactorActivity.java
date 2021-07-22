@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.bignerdranch.android.mytimetable.R;
+import com.bignerdranch.android.mytimetable.data.TimetableData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,10 @@ public class RefactorActivity extends AppCompatActivity {
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         List<RefactorListModel> refactorListModelList = new ArrayList<>();
-        RefactorAdapter refactorAdapter = new RefactorAdapter(refactorListModelList, this);
+        TimetableData timetableData = new TimetableData(this);
+
+        RefactorAdapter refactorAdapter = new RefactorAdapter(timetableData.lessonsCh, timetableData.lessonsZn, timetableData.lessonsBegin,
+                timetableData.lessonsEnd  ,this);
 
         recyclerView.setAdapter(refactorAdapter);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
