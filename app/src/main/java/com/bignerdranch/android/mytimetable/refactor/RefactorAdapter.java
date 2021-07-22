@@ -5,8 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,23 +21,26 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
     private ArrayList<List<String>> lessonsZn;
     private ArrayList<List<String>> lessonsBegin;
     private ArrayList<List<String>> lessonsEnd;
+    private ArrayList<String> days;
 
     private static final int DAYS = 7;
     private Context context;
 
     public RefactorAdapter(ArrayList<List<String>> lessonsCh, ArrayList<List<String>> lessonsZn,
-                           ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd, Context context) {
+                           ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd,
+                           ArrayList<String> days, Context context) {
         this.lessonsCh = lessonsCh;
         this.lessonsZn = lessonsZn;
         this.context = context;
         this.lessonsBegin = lessonsBegin;
         this.lessonsEnd = lessonsEnd;
+        this.days = days;
     }
 
     public RefactorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.refactor__rv_card,
+        CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.refactor__rv_card,
                 null, false);
-        return new RefactorViewHolder(relativeLayout);
+        return new RefactorViewHolder(cardView);
     }
 
     @Override
@@ -51,6 +55,7 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
 
     class RefactorViewHolder extends RecyclerView.ViewHolder {
         private RecyclerView recyclerViewElement;
+        private TextView tv;
 
         public void bind(int position) {
 
@@ -59,11 +64,14 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerViewElement.setLayoutManager(linearLayoutManager);
             recyclerViewElement.setAdapter(elementAdapter);
+
+            tv.setText(days.get(position));
         }
 
         public RefactorViewHolder(View itemView) {
             super(itemView);
             recyclerViewElement = itemView.findViewById(R.id.refactor_rv_in_rv);
+            tv = itemView.findViewById(R.id.refactor_tv_day_of_week);
         }
     }
 }

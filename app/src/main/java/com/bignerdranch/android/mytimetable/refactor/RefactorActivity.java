@@ -27,11 +27,10 @@ public class RefactorActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.refactor_rv);
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        List<RefactorListModel> refactorListModelList = new ArrayList<>();
         TimetableData timetableData = new TimetableData(this);
 
         RefactorAdapter refactorAdapter = new RefactorAdapter(timetableData.lessonsCh, timetableData.lessonsZn, timetableData.lessonsBegin,
-                timetableData.lessonsEnd  ,this);
+                timetableData.lessonsEnd, timetableData.days, this);
 
         recyclerView.setAdapter(refactorAdapter);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -44,7 +43,7 @@ public class RefactorActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
