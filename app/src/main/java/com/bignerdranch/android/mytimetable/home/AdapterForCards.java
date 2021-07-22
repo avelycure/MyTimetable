@@ -16,7 +16,6 @@ import java.util.List;
 
 public class AdapterForCards extends RecyclerView.Adapter<AdapterForCards.CardViewHolder> {
     private Context context;
-
     private List<LessonModel> lessonModelsList;
 
     public AdapterForCards(Context context, List<LessonModel> lessonModels) {

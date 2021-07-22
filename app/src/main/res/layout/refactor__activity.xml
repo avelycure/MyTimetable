@@ -18,6 +18,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add custom view for refactoring lessons"/>
+        android:text="Add staggered grid layout for refactoring lessons"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/refactor_rv"/>
 
 </LinearLayout>
