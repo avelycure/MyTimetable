@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.bignerdranch.android.mytimetable.R;
+import com.bignerdranch.android.mytimetable.dagger.App;
 import com.bignerdranch.android.mytimetable.data.TimetableData;
 
 import org.json.JSONException;
@@ -49,14 +50,13 @@ public class RefactorActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.refactor_save_to_file);
         rbCh.setChecked(true);
 
+        Log.d("tag", "ref1" );
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        final TimetableData timetableData = new TimetableData(this);
-        try {
-            timetableData.readFromFile("lessonsCh", "lessonsZn", this);
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        final TimetableData timetableData = ((App) getApplication()).appComponent.getTimetableData();
+        Log.d("tag", "ref2" );
+        Log.d("tag", "data: " + timetableData.lessonsCh.get(0).get(5));
 
+        Log.d("tag", "ref3" );
         final RefactorAdapter refactorAdapter = new RefactorAdapter(timetableData.lessonsCh, timetableData.lessonsZn, timetableData.lessonsBegin,
                 timetableData.lessonsEnd, timetableData.days, this);
 

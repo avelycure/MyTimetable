@@ -26,7 +26,6 @@ import java.util.Scanner;
 import static android.content.Context.MODE_PRIVATE;
 
 public class TimetableData {
-    private Context context;
     private static final int DAYS_IN_WEEK = 7;
     private static final int LESSONS_A_DAY = 6;
     public ArrayList<List<String>> lessonsZn = new ArrayList<>();
@@ -38,9 +37,8 @@ public class TimetableData {
     public ArrayList<Integer> lessonsBeginInMinute = new ArrayList<>();
     public ArrayList<Integer> lessonsEndInMinute = new ArrayList<>();
 
-    public TimetableData(Context context) {
-        this.context = context;
-
+    public TimetableData() {
+/*
         months.add(context.getResources().getString(R.string.january));
         months.add(context.getResources().getString(R.string.february));
         months.add(context.getResources().getString(R.string.march));
@@ -61,6 +59,28 @@ public class TimetableData {
         days.add(context.getResources().getString(R.string.friday));
         days.add(context.getResources().getString(R.string.saturday));
         days.add(context.getResources().getString(R.string.sunday));
+*/
+
+        months.add("1");
+        months.add("2");
+        months.add("3");
+        months.add("4");
+        months.add("5");
+        months.add("6");
+        months.add("7");
+        months.add("8");
+        months.add("9");
+        months.add("10");
+        months.add("11");
+        months.add("12");
+
+        days.add("1");
+        days.add("2");
+        days.add("3");
+        days.add("4");
+        days.add("5");
+        days.add("6");
+        days.add("7");
 
         lessonsBegin.add(Arrays.asList("08", "30"));
         lessonsBegin.add(Arrays.asList("10", "15"));
@@ -111,7 +131,7 @@ public class TimetableData {
         bufferedWriter.close();
     }
 
-    public void writeEmptyFile(String fileName) throws JSONException, IOException {
+    public void writeEmptyFile(String fileName, Context context) throws JSONException, IOException {
         JSONObject week = new JSONObject();
         JSONArray day;
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
@@ -130,10 +150,10 @@ public class TimetableData {
         bufferedWriter.close();
     }
 
-    public String getResponse(String fileName) throws IOException, JSONException {
+    public String getResponse(String fileName, Context context) throws IOException, JSONException {
         File file = new File(context.getFilesDir(), fileName);
         if (!file.exists())
-            writeEmptyFile(fileName);
+            writeEmptyFile(fileName, context);
 
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -162,10 +182,10 @@ public class TimetableData {
     }
 
     public void readFromFile(String fileNameCh, String fileNameZn, Context context) throws IOException, JSONException {
-        String response = getResponse(fileNameCh);
+        String response = getResponse(fileNameCh, context);
         readFile(lessonsCh, response);
 
-        response = getResponse(fileNameZn);
+        response = getResponse(fileNameZn, context);
         readFile(lessonsZn, response);
     }
 

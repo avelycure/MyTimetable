@@ -104,8 +104,7 @@ public class TimetableRepository {
 
         for (int i = 0; i < arraySize; i++) {
             if (weekType == 0)
-                list.add(new
-                        LessonModel(timetableData.lessonsBegin.get(i).get(0) + ":" + timetableData.lessonsBegin.get(i).get(1),
+                list.add(new LessonModel(timetableData.lessonsBegin.get(i).get(0) + ":" + timetableData.lessonsBegin.get(i).get(1),
                         timetableData.lessonsEnd.get(i).get(0) + ":" + timetableData.lessonsEnd.get(i).get(1),
                         timetableData.lessonsCh.get(dayOfWeekNum).get(i),
                         isCurrentLesson(i)));
