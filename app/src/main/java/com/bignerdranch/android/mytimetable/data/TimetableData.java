@@ -1,15 +1,34 @@
 package com.bignerdranch.android.mytimetable.data;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.bignerdranch.android.mytimetable.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class TimetableData {
     private Context context;
+    private static final int DAYS_IN_WEEK = 7;
+    private static final int LESSONS_A_DAY = 6;
 
     public TimetableData(Context context) {
         this.context = context;
@@ -101,4 +120,73 @@ public class TimetableData {
     public ArrayList<List<String>> lessonsEnd = new ArrayList<>();
     public ArrayList<Integer> lessonsBeginInMinute = new ArrayList<>();
     public ArrayList<Integer> lessonsEndInMinute = new ArrayList<>();
+
+    public void writeToFile(ArrayList<List<String>> list, String fileName, Context context) throws IOException, JSONException {
+        JSONObject week = new JSONObject();
+        JSONArray day;
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            day = new JSONArray();
+            for (int j = 0; j < LESSONS_A_DAY; j++) {
+                day.put(list.get(i).get(j));
+            }
+            week.put(Integer.toString(i), day);
+        }
+
+        String weekString = week.toString();
+        Log.d("tag", "weekString: " + weekString);
+
+        File file = new File(context.getFilesDir(), fileName);
+        FileWriter fileWriter = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(weekString);
+        bufferedWriter.close();
+    }
+
+    public void readFromFile(String fileName, Context context) throws IOException, JSONException {
+        File file = new File(context.getFilesDir(), fileName);
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder();
+        String line = bufferedReader.readLine();
+        while (line != null) {
+            stringBuilder.append(line).append("\n");
+            line = bufferedReader.readLine();
+        }
+        bufferedReader.close();
+
+        String response = stringBuilder.toString();
+        Log.d("tag", "response: " + response);
+
+        JSONObject jsonObject = new JSONObject(response);
+        if (fileName.equals("lessonsCh")) {
+            lessonsCh.clear();
+            JSONArray jsonArray;
+            ArrayList<String> list;
+            for (int i = 0; i < DAYS_IN_WEEK; i++) {
+                list = new ArrayList<>();
+                jsonArray = jsonObject.getJSONArray(Integer.toString(i));
+                for (int j = 0; j < LESSONS_A_DAY; j++)
+                    list.add((String) jsonArray.get(j));
+                lessonsCh.add(list);
+            }
+        }
+
+        Log.d("tag", "lessonsCh: " + lessonsCh.toString());
+
+        if (fileName.equals("lessonsZn")) {
+            JSONArray jsonArray;
+            ArrayList<String> list;
+            for (int i = 0; i < DAYS_IN_WEEK; i++) {
+                list = new ArrayList<>();
+                jsonArray = jsonObject.getJSONArray(Integer.toString(i));
+                for (int j = 0; j < LESSONS_A_DAY; j++)
+                    list.add((String) jsonArray.get(j));
+                lessonsZn.add(list);
+            }
+        }
+        Log.d("tag", "lessonsZn: " + lessonsZn.toString());
+
+    }
+
 }

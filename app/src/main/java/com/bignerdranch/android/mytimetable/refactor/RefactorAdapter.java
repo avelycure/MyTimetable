@@ -1,6 +1,7 @@
 package com.bignerdranch.android.mytimetable.refactor;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
     private ArrayList<List<String>> lessonsBegin;
     private ArrayList<List<String>> lessonsEnd;
     private ArrayList<String> days;
+
+    private ElementAdapter elementAdapter;
 
     private static final int DAYS = 7;
     private Context context;
@@ -45,6 +48,7 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
     public RefactorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView cardView = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.refactor__rv_card,
                 null, false);
+        elementAdapter = new ElementAdapter(lessonsBegin, lessonsEnd);
         return new RefactorViewHolder(cardView);
     }
 
@@ -59,13 +63,11 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
     }
 
     class RefactorViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerView recyclerViewElement;
         private TextView tv;
+        private RecyclerView recyclerViewElement;
 
         public void bind(int position) {
-
-            ElementAdapter elementAdapter = new ElementAdapter(lessonsBegin, lessonsEnd);
-
+            Log.d("tag", "pos: " + position + " " + lessonsCh.size());
             if (chChecked)
                 elementAdapter.setLessons(lessonsCh.get(position));
             else

@@ -1,5 +1,7 @@
 package com.bignerdranch.android.mytimetable.refactor;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,10 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementV
     private List<String> lessons;
     private ArrayList<List<String>> lessonsBegin;
     private ArrayList<List<String>> lessonsEnd;
+
+    public List<String> getLessons() {
+        return lessons;
+    }
 
     public void setLessons(List<String> lessons) {
         this.lessons = lessons;
@@ -50,10 +56,20 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementV
         private TextView tvTimeBegin;
         private TextView tvTimeEnd;
 
-        public void bind(int position) {
+        public void bind(final int position) {
             editText.setText(lessons.get(position));
             tvTimeBegin.setText(lessonsBegin.get(position).get(0) + ":" + lessonsBegin.get(position).get(1));
             tvTimeEnd.setText(lessonsEnd.get(position).get(0) + ":" + lessonsEnd.get(position).get(1));
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    lessons.set(position, s.toString());
+                }
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
         }
 
         public ElementViewHolder(View itemView) {
