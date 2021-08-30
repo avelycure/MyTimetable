@@ -22,6 +22,7 @@ import com.bignerdranch.android.mytimetable.R;
 import com.bignerdranch.android.mytimetable.data.TimetableData;
 import com.bignerdranch.android.mytimetable.refactor.RefactorActivity;
 
+import java.io.File;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         timeTableViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
-        timeTableViewModel.init(new TimetableData(this));
+        timeTableViewModel.init(new TimetableData(this), this);
 
         timeTableViewModel.getLessons().observe(this, new Observer<List<LessonModel>>() {
             @Override

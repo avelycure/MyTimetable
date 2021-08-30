@@ -1,5 +1,6 @@
 package com.bignerdranch.android.mytimetable.home;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -9,6 +10,9 @@ import androidx.lifecycle.ViewModel;
 import com.bignerdranch.android.mytimetable.data.TimetableData;
 import com.bignerdranch.android.mytimetable.model.TimetableRepository;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +38,18 @@ public class HomeActivityViewModel extends ViewModel {
         return mLessons;
     }
 
-    public void init(TimetableData timetableData) {
+    public void init(TimetableData timetableData, Context context) {
         if (mLessons != null)
             return;
 
         this.timetableData = timetableData;
+        try {
+            timetableData.readFromFile("lessonsCh", "lessonsZn", context);
+        } catch (IOException | JSONException e) {
+            Log.d("tag", "exception" + e.getMessage());
+            e.printStackTrace();
+        }
+
         timeRepo = new TimetableRepository(timetableData);
         mLessons = new MutableLiveData<>();
         weekDay = new MutableLiveData<>();

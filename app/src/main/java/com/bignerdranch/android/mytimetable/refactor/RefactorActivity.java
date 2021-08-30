@@ -52,9 +52,8 @@ public class RefactorActivity extends AppCompatActivity {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         final TimetableData timetableData = new TimetableData(this);
         try {
-            timetableData.readFromFile("lessonsCh", this);
+            timetableData.readFromFile("lessonsCh", "lessonsZn", this);
         } catch (IOException | JSONException e) {
-            Log.d("tag", "exception" + e.getMessage());
             e.printStackTrace();
         }
 
@@ -81,9 +80,10 @@ public class RefactorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Log.d("tag", "toFile" + timetableData.lessonsCh);
-                    timetableData.writeToFile(timetableData.lessonsCh, "lessonsCh", context);
-                    //timetableData.writeToFile(timetableData.lessonsZn, "lessonsZn", context);
+                    if (rbCh.isChecked())
+                        timetableData.writeToFile(timetableData.lessonsCh, "lessonsCh", context);
+                    else
+                        timetableData.writeToFile(timetableData.lessonsZn, "lessonsZn", context);
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }

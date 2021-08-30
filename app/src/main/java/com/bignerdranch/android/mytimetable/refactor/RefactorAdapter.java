@@ -67,7 +67,6 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
         private RecyclerView recyclerViewElement;
 
         public void bind(int position) {
-            Log.d("tag", "pos: " + position + " " + lessonsCh.size());
             if (chChecked)
                 elementAdapter.setLessons(lessonsCh.get(position));
             else
