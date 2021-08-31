@@ -37,6 +37,9 @@ public class RefactorActivity extends AppCompatActivity {
     private RadioGroup rg;
     private RadioButton rbCh;
 
+    private RefactorAdapter refactorAdapter;
+    private TimetableData timetableData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +54,8 @@ public class RefactorActivity extends AppCompatActivity {
         rbCh.setChecked(true);
 
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        final TimetableData timetableData = ((App) getApplication()).appComponent.getTimetableData();
-        final RefactorAdapter refactorAdapter = new RefactorAdapter(timetableData.lessonsCh, timetableData.lessonsZn, timetableData.lessonsBegin,
+        timetableData = ((App) getApplication()).appComponent.getTimetableData();
+        refactorAdapter = new RefactorAdapter(timetableData.lessonsCh, timetableData.lessonsZn, timetableData.lessonsBegin,
                 timetableData.lessonsEnd, timetableData.days, timetableData, this);
 
         recyclerView.setAdapter(refactorAdapter);
