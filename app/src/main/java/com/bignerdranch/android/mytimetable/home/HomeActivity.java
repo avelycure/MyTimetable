@@ -117,14 +117,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("tag", "restarted");
-        List<LessonModel> list = timeTableViewModel.getLessons().getValue();
-        Log.d("tag", "lessons: " + list.get(5).getLessonName());
-        Log.d("tag", "data: " + ((App) getApplication()).appComponent.getTimetableData().lessonsCh.get(0).get(5));
         timeTableViewModel.updateUI();
-        list = timeTableViewModel.getLessons().getValue();
-        Log.d("tag", "lessons: " + list.get(5).getLessonName());
-        Log.d("tag", "data: " + ((App) getApplication()).appComponent.getTimetableData().lessonsCh.get(0).get(5));
         adapter.notifyDataSetChanged();
     }
 

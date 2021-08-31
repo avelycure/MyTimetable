@@ -50,15 +50,10 @@ public class RefactorActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.refactor_save_to_file);
         rbCh.setChecked(true);
 
-        Log.d("tag", "ref1" );
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         final TimetableData timetableData = ((App) getApplication()).appComponent.getTimetableData();
-        Log.d("tag", "ref2" );
-        Log.d("tag", "data: " + timetableData.lessonsCh.get(0).get(5));
-
-        Log.d("tag", "ref3" );
         final RefactorAdapter refactorAdapter = new RefactorAdapter(timetableData.lessonsCh, timetableData.lessonsZn, timetableData.lessonsBegin,
-                timetableData.lessonsEnd, timetableData.days, this);
+                timetableData.lessonsEnd, timetableData.days, timetableData, this);
 
         recyclerView.setAdapter(refactorAdapter);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);

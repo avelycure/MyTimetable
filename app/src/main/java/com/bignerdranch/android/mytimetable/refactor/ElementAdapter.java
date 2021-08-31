@@ -2,6 +2,7 @@ package com.bignerdranch.android.mytimetable.refactor;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,26 +13,29 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.mytimetable.R;
+import com.bignerdranch.android.mytimetable.data.TimetableData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementViewHolder> {
-    private List<String> lessons;
+    private ArrayList<String> lessons;
     private ArrayList<List<String>> lessonsBegin;
     private ArrayList<List<String>> lessonsEnd;
+    private TimetableData timetableData;
 
     public List<String> getLessons() {
         return lessons;
     }
 
-    public void setLessons(List<String> lessons) {
+    public void setLessons(ArrayList<String> lessons) {
         this.lessons = lessons;
     }
 
-    public ElementAdapter(ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd) {
+    public ElementAdapter(ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd, TimetableData timetableData) {
         this.lessonsBegin = lessonsBegin;
         this.lessonsEnd = lessonsEnd;
+        this.timetableData = timetableData;
     }
 
     @Override
@@ -63,10 +67,12 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ElementV
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     lessons.set(position, s.toString());
                 }
+
                 @Override
                 public void afterTextChanged(Editable s) {}
             });

@@ -1,10 +1,6 @@
 package com.bignerdranch.android.mytimetable.data;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.bignerdranch.android.mytimetable.R;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,89 +8,55 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class TimetableData {
     private static final int DAYS_IN_WEEK = 7;
     private static final int LESSONS_A_DAY = 6;
-    public ArrayList<List<String>> lessonsZn = new ArrayList<>();
-    public ArrayList<List<String>> lessonsCh = new ArrayList<>();
-    public ArrayList<String> days = new ArrayList<>();
-    public ArrayList<String> months = new ArrayList<>();
-    public ArrayList<List<String>> lessonsBegin = new ArrayList<>();
-    public ArrayList<List<String>> lessonsEnd = new ArrayList<>();
-    public ArrayList<Integer> lessonsBeginInMinute = new ArrayList<>();
-    public ArrayList<Integer> lessonsEndInMinute = new ArrayList<>();
+    public ArrayList<ArrayList<String>> lessonsZn;
+    public ArrayList<ArrayList<String>> lessonsCh;
+    public ArrayList<String> days;
+    public ArrayList<String> months;
+    public ArrayList<List<String>> lessonsBegin;
+    public ArrayList<List<String>> lessonsEnd;
+    public ArrayList<Integer> lessonsBeginInMinute;
+    public ArrayList<Integer> lessonsEndInMinute;
 
     public TimetableData() {
-/*
-        months.add(context.getResources().getString(R.string.january));
-        months.add(context.getResources().getString(R.string.february));
-        months.add(context.getResources().getString(R.string.march));
-        months.add(context.getResources().getString(R.string.april));
-        months.add(context.getResources().getString(R.string.may));
-        months.add(context.getResources().getString(R.string.june));
-        months.add(context.getResources().getString(R.string.july));
-        months.add(context.getResources().getString(R.string.august));
-        months.add(context.getResources().getString(R.string.september));
-        months.add(context.getResources().getString(R.string.october));
-        months.add(context.getResources().getString(R.string.november));
-        months.add(context.getResources().getString(R.string.december));
+        lessonsZn = new ArrayList<>();
+        lessonsCh = new ArrayList<>();
+        days = new ArrayList<>();
+        months = new ArrayList<>();
+        lessonsBegin = new ArrayList<>();
+        lessonsEnd = new ArrayList<>();
+        lessonsBeginInMinute = new ArrayList<>();
+        lessonsEndInMinute = new ArrayList<>();
 
-        days.add(context.getResources().getString(R.string.monday));
-        days.add(context.getResources().getString(R.string.tuesday));
-        days.add(context.getResources().getString(R.string.wednesday));
-        days.add(context.getResources().getString(R.string.thursday));
-        days.add(context.getResources().getString(R.string.friday));
-        days.add(context.getResources().getString(R.string.saturday));
-        days.add(context.getResources().getString(R.string.sunday));
-*/
+        months.add("января");months.add("февраля");
+        months.add("марта");months.add("апреля");months.add("мая");
+        months.add("июня");months.add("июля");months.add("августа");
+        months.add("сентября");months.add("октября");months.add("ноября");
+        months.add("декабря");
 
-        months.add("1");
-        months.add("2");
-        months.add("3");
-        months.add("4");
-        months.add("5");
-        months.add("6");
-        months.add("7");
-        months.add("8");
-        months.add("9");
-        months.add("10");
-        months.add("11");
-        months.add("12");
+        days.add("Понедельник");
+        days.add("Вторник");
+        days.add("Среда");
+        days.add("Четверг");
+        days.add("Пятница");
+        days.add("Суббота");
+        days.add("Воскресенье");
 
-        days.add("1");
-        days.add("2");
-        days.add("3");
-        days.add("4");
-        days.add("5");
-        days.add("6");
-        days.add("7");
-
-        lessonsBegin.add(Arrays.asList("08", "30"));
-        lessonsBegin.add(Arrays.asList("10", "15"));
-        lessonsBegin.add(Arrays.asList("12", "00"));
-        lessonsBegin.add(Arrays.asList("13", "50"));
-        lessonsBegin.add(Arrays.asList("15", "40"));
-        lessonsBegin.add(Arrays.asList("17", "25"));
-
-        lessonsEnd.add(Arrays.asList("10", "05"));
-        lessonsEnd.add(Arrays.asList("11", "50"));
-        lessonsEnd.add(Arrays.asList("13", "35"));
-        lessonsEnd.add(Arrays.asList("15", "25"));
-        lessonsEnd.add(Arrays.asList("17", "15"));
-        lessonsEnd.add(Arrays.asList("19", "00"));
+        lessonsBegin.add(Arrays.asList("08", "30")); lessonsEnd.add(Arrays.asList("10", "05"));
+        lessonsBegin.add(Arrays.asList("10", "15")); lessonsEnd.add(Arrays.asList("11", "50"));
+        lessonsBegin.add(Arrays.asList("12", "00")); lessonsEnd.add(Arrays.asList("13", "35"));
+        lessonsBegin.add(Arrays.asList("13", "50")); lessonsEnd.add(Arrays.asList("15", "25"));
+        lessonsBegin.add(Arrays.asList("15", "40")); lessonsEnd.add(Arrays.asList("17", "15"));
+        lessonsBegin.add(Arrays.asList("17", "25")); lessonsEnd.add(Arrays.asList("19", "00"));
 
         lessonsBeginInMinute.add(Integer.parseInt(lessonsBegin.get(0).get(0)) * 60 + Integer.parseInt(lessonsBegin.get(0).get(1)));
         lessonsBeginInMinute.add(Integer.parseInt(lessonsBegin.get(1).get(0)) * 60 + Integer.parseInt(lessonsBegin.get(1).get(1)));
@@ -111,7 +73,7 @@ public class TimetableData {
         lessonsEndInMinute.add(Integer.parseInt(lessonsEnd.get(5).get(0)) * 60 + Integer.parseInt(lessonsEnd.get(5).get(1)));
     }
 
-    public void writeToFile(ArrayList<List<String>> list, String fileName, Context context) throws IOException, JSONException {
+    public void writeToFile(ArrayList<ArrayList<String>> list, String fileName, Context context) throws IOException, JSONException {
         JSONObject week = new JSONObject();
         JSONArray day;
         for (int i = 0; i < DAYS_IN_WEEK; i++) {
@@ -167,7 +129,7 @@ public class TimetableData {
         return stringBuilder.toString();
     }
 
-    public void readFile(ArrayList<List<String>> lessons, String response) throws JSONException {
+    public void readFile(ArrayList<ArrayList<String>> lessons, String response) throws JSONException {
         JSONArray jsonArray;
         ArrayList<String> list;
         JSONObject jsonResponse = new JSONObject(response);
