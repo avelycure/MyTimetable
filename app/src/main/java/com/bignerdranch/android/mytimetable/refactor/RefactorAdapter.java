@@ -1,6 +1,7 @@
 package com.bignerdranch.android.mytimetable.refactor;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.mytimetable.R;
+import com.bignerdranch.android.mytimetable.data.TimetableData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.RefactorViewHolder> {
-    private ArrayList<List<String>> lessonsCh;
-    private ArrayList<List<String>> lessonsZn;
+    private ArrayList<ArrayList<String>> lessonsCh;
+    private ArrayList<ArrayList<String>> lessonsZn;
     private ArrayList<List<String>> lessonsBegin;
     private ArrayList<List<String>> lessonsEnd;
     private ArrayList<String> days;
@@ -26,13 +28,15 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
     private Context context;
     private boolean chChecked;
 
+    private TimetableData timetableData;
+
     public void setChChecked(boolean chChecked) {
         this.chChecked = chChecked;
     }
 
-    public RefactorAdapter(ArrayList<List<String>> lessonsCh, ArrayList<List<String>> lessonsZn,
+    public RefactorAdapter(ArrayList<ArrayList<String>> lessonsCh, ArrayList<ArrayList<String>> lessonsZn,
                            ArrayList<List<String>> lessonsBegin, ArrayList<List<String>> lessonsEnd,
-                           ArrayList<String> days, Context context) {
+                           ArrayList<String> days, TimetableData timetableData, Context context) {
         this.lessonsCh = lessonsCh;
         this.lessonsZn = lessonsZn;
         this.context = context;
@@ -40,6 +44,7 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
         this.lessonsEnd = lessonsEnd;
         this.days = days;
         chChecked = true;
+        this.timetableData = timetableData;
     }
 
     public RefactorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,19 +64,18 @@ public class RefactorAdapter extends RecyclerView.Adapter<RefactorAdapter.Refact
     }
 
     class RefactorViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerView recyclerViewElement;
         private TextView tv;
+        private RecyclerView recyclerViewElement;
 
         public void bind(int position) {
-
-            ElementAdapter elementAdapter = new ElementAdapter(lessonsBegin, lessonsEnd);
+            ElementAdapter elementAdapter = new ElementAdapter(lessonsBegin, lessonsEnd, timetableData);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
 
             if (chChecked)
                 elementAdapter.setLessons(lessonsCh.get(position));
             else
                 elementAdapter.setLessons(lessonsZn.get(position));
 
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerViewElement.setLayoutManager(linearLayoutManager);
             recyclerViewElement.setAdapter(elementAdapter);
 

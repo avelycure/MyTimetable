@@ -1,69 +1,62 @@
 package com.bignerdranch.android.mytimetable.data;
 
 import android.content.Context;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import com.bignerdranch.android.mytimetable.R;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TimetableData {
-    private Context context;
+    private static final int DAYS_IN_WEEK = 7;
+    private static final int LESSONS_A_DAY = 6;
+    public ArrayList<ArrayList<String>> lessonsZn;
+    public ArrayList<ArrayList<String>> lessonsCh;
+    public ArrayList<String> days;
+    public ArrayList<String> months;
+    public ArrayList<List<String>> lessonsBegin;
+    public ArrayList<List<String>> lessonsEnd;
+    public ArrayList<Integer> lessonsBeginInMinute;
+    public ArrayList<Integer> lessonsEndInMinute;
 
-    public TimetableData(Context context) {
-        this.context = context;
+    public TimetableData() {
+        lessonsZn = new ArrayList<>();
+        lessonsCh = new ArrayList<>();
+        days = new ArrayList<>();
+        months = new ArrayList<>();
+        lessonsBegin = new ArrayList<>();
+        lessonsEnd = new ArrayList<>();
+        lessonsBeginInMinute = new ArrayList<>();
+        lessonsEndInMinute = new ArrayList<>();
 
-        months.add(context.getResources().getString(R.string.january));
-        months.add(context.getResources().getString(R.string.february));
-        months.add(context.getResources().getString(R.string.march));
-        months.add(context.getResources().getString(R.string.april));
-        months.add(context.getResources().getString(R.string.may));
-        months.add(context.getResources().getString(R.string.june));
-        months.add(context.getResources().getString(R.string.july));
-        months.add(context.getResources().getString(R.string.august));
-        months.add(context.getResources().getString(R.string.september));
-        months.add(context.getResources().getString(R.string.october));
-        months.add(context.getResources().getString(R.string.november));
-        months.add(context.getResources().getString(R.string.december));
+        months.add("января");months.add("февраля");
+        months.add("марта");months.add("апреля");months.add("мая");
+        months.add("июня");months.add("июля");months.add("августа");
+        months.add("сентября");months.add("октября");months.add("ноября");
+        months.add("декабря");
 
-        days.add(context.getResources().getString(R.string.monday));
-        days.add(context.getResources().getString(R.string.tuesday));
-        days.add(context.getResources().getString(R.string.wednesday));
-        days.add(context.getResources().getString(R.string.thursday));
-        days.add(context.getResources().getString(R.string.friday));
-        days.add(context.getResources().getString(R.string.saturday));
-        days.add(context.getResources().getString(R.string.sunday));
+        days.add("Понедельник");
+        days.add("Вторник");
+        days.add("Среда");
+        days.add("Четверг");
+        days.add("Пятница");
+        days.add("Суббота");
+        days.add("Воскресенье");
 
-        lessonsCh.add(Arrays.asList("", "", "", "(сем) Элективный курс по физической культуре и спорту Каф", "(сем) Уравнения математической физики 1032л", "(лек) Уравнения математической физики 544л"));
-        lessonsCh.add(Arrays.asList("", "", "(лек) Математические модели механики сплошной среды 216л", "(лек) Математические модели механики сплошной среды 544л", "", ""));
-        lessonsCh.add(Arrays.asList("ВК", "ВК", "ВК", "ВК", "", ""));
-        lessonsCh.add(Arrays.asList("", "", "", "", "(сем) Уравнения математической физики 527л", "(сем) Философия 527л"));
-        lessonsCh.add(Arrays.asList("(сем) Методы вычислений 525л", "(лек) Методы вычислений 544л", "(лаб) Методы вычислений Каф", "(сем) Элективный курс по физической культуре и спорту Каф", "", ""));
-        lessonsCh.add(Arrays.asList("(сем) Математические модели механики сплошной среды 525л", "(лек) Теория вероятностей 212л", "(сем) Математические модели механики сплошной среды 527л", "(сем) Теория вероятностей 527л", "", ""));
-        lessonsCh.add(Arrays.asList("", "", "", "", "", ""));
-
-        lessonsZn.add(Arrays.asList("", "", "", "(сем) Элективный курс по физической культуре и спорту Каф", "(лек) Уравнения математической физики 544л", "(лек) Уравнения математической физики 544л"));
-        lessonsZn.add(Arrays.asList("", "", "(лек) Математические модели механики сплошной среды 216л", "(лек) Философия 544л", "", ""));
-        lessonsZn.add(Arrays.asList("ВК", "ВК", "ВК", "ВК", "", ""));
-        lessonsZn.add(Arrays.asList("", "", "", "", "(сем) Уравнения математической физики 527л", "(сем) Философия 527л"));
-        lessonsZn.add(Arrays.asList("(сем) Методы вычислений 525л", "(лек) Методы вычислений 544л", "(лаб) Методы вычислений Каф", "(сем) Элективный курс по физической культуре и спорту Каф", "", ""));
-        lessonsZn.add(Arrays.asList("(лек) Теория вероятностей 216л", "(лек) Теория вероятностей 212л", "(сем) Математические модели механики сплошной среды 527л", "(сем) Теория вероятностей 527л", "", ""));
-        lessonsZn.add(Arrays.asList("", "", "", "", "", ""));
-
-        lessonsBegin.add(Arrays.asList("08", "30"));
-        lessonsBegin.add(Arrays.asList("10", "15"));
-        lessonsBegin.add(Arrays.asList("12", "00"));
-        lessonsBegin.add(Arrays.asList("13", "50"));
-        lessonsBegin.add(Arrays.asList("15", "40"));
-        lessonsBegin.add(Arrays.asList("17", "25"));
-
-        lessonsEnd.add(Arrays.asList("10", "05"));
-        lessonsEnd.add(Arrays.asList("11", "50"));
-        lessonsEnd.add(Arrays.asList("13", "35"));
-        lessonsEnd.add(Arrays.asList("15", "25"));
-        lessonsEnd.add(Arrays.asList("17", "15"));
-        lessonsEnd.add(Arrays.asList("19", "00"));
+        lessonsBegin.add(Arrays.asList("08", "30")); lessonsEnd.add(Arrays.asList("10", "05"));
+        lessonsBegin.add(Arrays.asList("10", "15")); lessonsEnd.add(Arrays.asList("11", "50"));
+        lessonsBegin.add(Arrays.asList("12", "00")); lessonsEnd.add(Arrays.asList("13", "35"));
+        lessonsBegin.add(Arrays.asList("13", "50")); lessonsEnd.add(Arrays.asList("15", "25"));
+        lessonsBegin.add(Arrays.asList("15", "40")); lessonsEnd.add(Arrays.asList("17", "15"));
+        lessonsBegin.add(Arrays.asList("17", "25")); lessonsEnd.add(Arrays.asList("19", "00"));
 
         lessonsBeginInMinute.add(Integer.parseInt(lessonsBegin.get(0).get(0)) * 60 + Integer.parseInt(lessonsBegin.get(0).get(1)));
         lessonsBeginInMinute.add(Integer.parseInt(lessonsBegin.get(1).get(0)) * 60 + Integer.parseInt(lessonsBegin.get(1).get(1)));
@@ -80,12 +73,82 @@ public class TimetableData {
         lessonsEndInMinute.add(Integer.parseInt(lessonsEnd.get(5).get(0)) * 60 + Integer.parseInt(lessonsEnd.get(5).get(1)));
     }
 
-    public ArrayList<List<String>> lessonsZn = new ArrayList<>();
-    public ArrayList<List<String>> lessonsCh = new ArrayList<>();
-    public ArrayList<String> days = new ArrayList<>();
-    public ArrayList<String> months = new ArrayList<>();
-    public ArrayList<List<String>> lessonsBegin = new ArrayList<>();
-    public ArrayList<List<String>> lessonsEnd = new ArrayList<>();
-    public ArrayList<Integer> lessonsBeginInMinute = new ArrayList<>();
-    public ArrayList<Integer> lessonsEndInMinute = new ArrayList<>();
+    public void writeToFile(ArrayList<ArrayList<String>> list, String fileName, Context context) throws IOException, JSONException {
+        JSONObject week = new JSONObject();
+        JSONArray day;
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            day = new JSONArray();
+            for (int j = 0; j < LESSONS_A_DAY; j++) {
+                day.put(list.get(i).get(j));
+            }
+            week.put(Integer.toString(i), day);
+        }
+
+        String weekString = week.toString();
+
+        File file = new File(context.getFilesDir(), fileName);
+        FileWriter fileWriter = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(weekString);
+        bufferedWriter.close();
+    }
+
+    public void writeEmptyFile(String fileName, Context context) throws JSONException, IOException {
+        JSONObject week = new JSONObject();
+        JSONArray day;
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            day = new JSONArray();
+            for (int j = 0; j < LESSONS_A_DAY; j++)
+                day.put("");
+            week.put(Integer.toString(i), day);
+        }
+
+        String weekString = week.toString();
+
+        File file = new File(context.getFilesDir(), fileName);
+        FileWriter fileWriter = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write(weekString);
+        bufferedWriter.close();
+    }
+
+    public String getResponse(String fileName, Context context) throws IOException, JSONException {
+        File file = new File(context.getFilesDir(), fileName);
+        if (!file.exists())
+            writeEmptyFile(fileName, context);
+
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        StringBuilder stringBuilder = new StringBuilder();
+        String line = bufferedReader.readLine();
+        while (line != null) {
+            stringBuilder.append(line).append("\n");
+            line = bufferedReader.readLine();
+        }
+        bufferedReader.close();
+        return stringBuilder.toString();
+    }
+
+    public void readFile(ArrayList<ArrayList<String>> lessons, String response) throws JSONException {
+        JSONArray jsonArray;
+        ArrayList<String> list;
+        JSONObject jsonResponse = new JSONObject(response);
+        lessons.clear();
+        for (int i = 0; i < DAYS_IN_WEEK; i++) {
+            list = new ArrayList<>();
+            jsonArray = jsonResponse.getJSONArray(Integer.toString(i));
+            for (int j = 0; j < LESSONS_A_DAY; j++)
+                list.add((String) jsonArray.get(j));
+            lessons.add(list);
+        }
+    }
+
+    public void readFromFile(String fileNameCh, String fileNameZn, Context context) throws IOException, JSONException {
+        String response = getResponse(fileNameCh, context);
+        readFile(lessonsCh, response);
+
+        response = getResponse(fileNameZn, context);
+        readFile(lessonsZn, response);
+    }
+
 }

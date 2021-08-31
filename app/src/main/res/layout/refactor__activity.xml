@@ -4,43 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".refactor.RefactorActivity"
+    android:background="@color/colorLayoutMain"
     android:orientation="vertical"
-    android:background="@color/colorLayoutMain">
+    tools:context=".refactor.RefactorActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/refactor_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/refactor_toolbar"
         android:background="@color/colorPrimaryDark"
-        app:titleTextColor="@color/colorLayoutMain"/>
+        app:titleTextColor="@color/colorLayoutMain" />
 
     <RadioGroup
+        android:id="@+id/refactor_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/refactor_rg"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/refactor_rb_ch"
-            android:text="Числитель"
-            android:layout_marginEnd="24dp"/>
-
-        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:text="Числитель" />
+
+        <RadioButton
             android:id="@+id/refactor_rb_zn"
-            android:text="Знаменатель"
-            android:layout_marginStart="8dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Знаменатель" />
 
     </RadioGroup>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/refactor_rv"/>
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/refactor_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/refactor_save_to_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Сохранить"
+                android:layout_below="@+id/refactor_rv"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+    </ScrollView>
 
 </LinearLayout>

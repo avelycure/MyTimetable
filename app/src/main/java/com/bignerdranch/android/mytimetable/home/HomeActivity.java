@@ -19,9 +19,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.bignerdranch.android.mytimetable.R;
+import com.bignerdranch.android.mytimetable.dagger.App;
 import com.bignerdranch.android.mytimetable.data.TimetableData;
 import com.bignerdranch.android.mytimetable.refactor.RefactorActivity;
 
+import org.json.JSONException;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -45,7 +51,13 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         timeTableViewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
-        timeTableViewModel.init(new TimetableData(this));
+        TimetableData timetableData = ((App) getApplication()).appComponent.getTimetableData();
+        try {
+            timetableData.readFromFile("lessonsCh", "lessonsZn", this);
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        timeTableViewModel.init(timetableData, this);
 
         timeTableViewModel.getLessons().observe(this, new Observer<List<LessonModel>>() {
             @Override
@@ -100,6 +112,13 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home__toolbar, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        timeTableViewModel.updateUI();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
