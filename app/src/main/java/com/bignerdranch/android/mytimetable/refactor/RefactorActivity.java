@@ -31,7 +31,6 @@ import java.util.List;
 //todo add coordinator layout
 public class RefactorActivity extends AppCompatActivity {
     private Button btnSave;
-    private Context context;
     private RecyclerView recyclerView;
     private Toolbar toolbar;
     private RadioGroup rg;
@@ -44,8 +43,6 @@ public class RefactorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.refactor__activity);
-
-        context = this;
 
         recyclerView = findViewById(R.id.refactor_rv);
         rg = findViewById(R.id.refactor_rg);
@@ -79,9 +76,9 @@ public class RefactorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     if (rbCh.isChecked())
-                        timetableData.writeToFile(timetableData.lessonsCh, "lessonsCh", context);
+                        timetableData.writeToFile(timetableData.lessonsCh, "lessonsCh", RefactorActivity.this);
                     else
-                        timetableData.writeToFile(timetableData.lessonsZn, "lessonsZn", context);
+                        timetableData.writeToFile(timetableData.lessonsZn, "lessonsZn", RefactorActivity.this);
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
