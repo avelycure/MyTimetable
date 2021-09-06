@@ -8,4 +8,4 @@
 * Dagger 2
 
 ## Скриншоты
-![Главный экран](https://github.com/avelycure/avelycure/blob/master/assets/timetable/Timetable.jpg)
+<img src="https://github.com/avelycure/avelycure/blob/master/assets/timetable/Timetable.jpg" width="200" />
