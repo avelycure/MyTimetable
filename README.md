@@ -14,5 +14,7 @@
 
 Activity для редактирования расписания представляет собой RecyclerView, в каждый элемент которого вложен еще один RecyclerView. RadioButton позволяет выбрать тип недели: числитель или знаменатель. Внизу фрагмента находится кнопка Сохранить, при нажатии на нее содержимое активного фрагмента сохраняется в файл.
 
+<p>
 <img src="https://github.com/avelycure/avelycure/blob/master/assets/timetable/edit_timetable1.jpg" width="320" />
 <img src="https://github.com/avelycure/avelycure/blob/master/assets/timetable/edit_timetable2.jpg" width="320" />
+</p>
