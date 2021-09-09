@@ -22,19 +22,23 @@ public class TimetableRepository {
     private int dayInTimetable;//день в году, чтобы иметь дату для отталкивания
     private int dayOfWeekNum;//номер дня недели
 
-    public final int TODAY;//день в году, чтобы иметь дату для отталкивания
-    public final int MONTH;
-    public final int HOUR;
-    public final int MINUTE;
+    public int TODAY;//день в году, чтобы иметь дату для отталкивания
+    public int MONTH;
+    public int HOUR;
+    public int MINUTE;
 
     public TimetableRepository(TimetableData timetableData) {
         this.timetableData = timetableData;
         myCalendar = Calendar.getInstance();
+        setTime();
+        UpdateFields();
+    }
+
+    private void setTime(){
         TODAY = myCalendar.get(Calendar.DAY_OF_YEAR);
         MONTH = myCalendar.get(Calendar.MONTH);
         MINUTE = myCalendar.get(Calendar.MINUTE);
         HOUR = myCalendar.get(Calendar.HOUR_OF_DAY);
-        UpdateFields();
     }
 
     public void UpdateFields() {
@@ -118,6 +122,7 @@ public class TimetableRepository {
     }
 
     private boolean isCurrentLesson(int position) {
+        setTime();
         if ((MINUTE + HOUR * 60 > timetableData.lessonsBeginInMinute.get(position) - 10) &&
                 (MINUTE + HOUR * 60 <= timetableData.lessonsEndInMinute.get(position)) &&
                 (dayInTimetable == TODAY))
