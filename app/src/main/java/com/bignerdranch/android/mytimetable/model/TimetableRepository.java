@@ -1,5 +1,7 @@
 package com.bignerdranch.android.mytimetable.model;
 
+import android.util.Log;
+
 import com.bignerdranch.android.mytimetable.data.TimetableData;
 import com.bignerdranch.android.mytimetable.home.LessonModel;
 
@@ -10,35 +12,55 @@ import java.util.List;
  * Class for working with time
  */
 public class TimetableRepository {
-    private TimetableData timetableData;
-    private Calendar myCalendar;
+    private final TimetableData timetableData;
+    private final Calendar myCalendar;
 
-    private String month;//название месяца
-    private int monthNum;//номер месяца
-    private int dayOfMonth;//день месяца
+    /**
+     * Month name
+     */
+    private String month;
 
-    private int weekType;//тип недели (числитель или знаменатель)
+    /**
+     * Number of month
+     */
+    private int monthNum;
 
-    private int dayInTimetable;//день в году, чтобы иметь дату для отталкивания
-    private int dayOfWeekNum;//номер дня недели
+    /**
+     * Number of day in month
+     */
+    private int dayOfMonth;
 
-    public int TODAY;//день в году, чтобы иметь дату для отталкивания
-    public int MONTH;
-    public int HOUR;
-    public int MINUTE;
+    /**
+     * Type of week. There are two types: Numerator and Denominator
+     */
+    private int weekType;
+
+    /**
+     * Selected day of the year
+     */
+    private int dayInTimetable;
+
+    /**
+     * Number of selected day in a week
+     */
+    private int dayOfWeekNum;
+
+    /**
+     * Constants that are showing the moment of launching the app
+     */
+    public final int TODAY;
+    public final int MONTH;
+    public final int HOUR;
+    public final int MINUTE;
 
     public TimetableRepository(TimetableData timetableData) {
         this.timetableData = timetableData;
         myCalendar = Calendar.getInstance();
-        setTime();
-        UpdateFields();
-    }
-
-    private void setTime(){
         TODAY = myCalendar.get(Calendar.DAY_OF_YEAR);
         MONTH = myCalendar.get(Calendar.MONTH);
         MINUTE = myCalendar.get(Calendar.MINUTE);
         HOUR = myCalendar.get(Calendar.HOUR_OF_DAY);
+        UpdateFields();
     }
 
     public void UpdateFields() {
@@ -69,10 +91,6 @@ public class TimetableRepository {
 
     public void setWeekType() {
         weekType = (myCalendar.get(Calendar.WEEK_OF_YEAR) + 1) % 2;
-    }
-
-    public int getWeekType() {
-        return weekType;
     }
 
     public int getDayOfWeekNum() {
@@ -108,7 +126,8 @@ public class TimetableRepository {
 
         for (int i = 0; i < arraySize; i++) {
             if (weekType == 0)
-                list.add(new LessonModel(timetableData.lessonsBegin.get(i).get(0) + ":" + timetableData.lessonsBegin.get(i).get(1),
+                list.add(new LessonModel(
+                        timetableData.lessonsBegin.get(i).get(0) + ":" + timetableData.lessonsBegin.get(i).get(1),
                         timetableData.lessonsEnd.get(i).get(0) + ":" + timetableData.lessonsEnd.get(i).get(1),
                         timetableData.lessonsCh.get(dayOfWeekNum).get(i),
                         isCurrentLesson(i)));
@@ -121,11 +140,13 @@ public class TimetableRepository {
         }
     }
 
+    /**
+     * Checking if the lesson is going now
+     */
     private boolean isCurrentLesson(int position) {
-        setTime();
-        if ((MINUTE + HOUR * 60 > timetableData.lessonsBeginInMinute.get(position) - 10) &&
-                (MINUTE + HOUR * 60 <= timetableData.lessonsEndInMinute.get(position)) &&
-                (dayInTimetable == TODAY))
+        if ((HOUR * 60 + MINUTE > timetableData.lessonsBeginInMinute.get(position) - 5) &&
+            (HOUR * 60 + MINUTE <= timetableData.lessonsEndInMinute.get(position)) &&
+            (dayInTimetable == TODAY))
             return true;
         else return false;
     }
