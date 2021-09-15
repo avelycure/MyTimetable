@@ -38,7 +38,7 @@ public class TimetableRepository {
     /**
      * Selected day of the year
      */
-    private int dayInTimetable;
+    private int selectedDay;
 
     /**
      * Number of selected day in a week
@@ -60,10 +60,10 @@ public class TimetableRepository {
         MONTH = myCalendar.get(Calendar.MONTH);
         MINUTE = myCalendar.get(Calendar.MINUTE);
         HOUR = myCalendar.get(Calendar.HOUR_OF_DAY);
-        UpdateFields();
+        updateFields();
     }
 
-    public void UpdateFields() {
+    public void updateFields() {
         setMonthNum();
         setMonth(monthNum);
         setDayOfMonth();
@@ -73,7 +73,7 @@ public class TimetableRepository {
     }
 
     public void setDayInTimetable() {
-        dayInTimetable = myCalendar.get(Calendar.DAY_OF_YEAR);
+        selectedDay = myCalendar.get(Calendar.DAY_OF_YEAR);
     }
 
     public void setDayOfMonth() {
@@ -85,8 +85,8 @@ public class TimetableRepository {
     }
 
     public void changeMyCalendar(int addDay) {
-        myCalendar.add(Calendar.DAY_OF_MONTH, addDay);
-        UpdateFields();
+        myCalendar.add(Calendar.DAY_OF_YEAR, addDay);
+        updateFields();
     }
 
     public void setWeekType() {
@@ -115,17 +115,17 @@ public class TimetableRepository {
         monthNum = myCalendar.get(Calendar.MONTH);
     }
 
+    //pay attention to weekType
     public void updateLessons(List<LessonModel> list) {
         int arraySize;
-        if (weekType == 0)
+        if (weekType == 1)
             arraySize = timetableData.lessonsCh.get(dayOfWeekNum).size();
         else
             arraySize = timetableData.lessonsZn.get(dayOfWeekNum).size();
-
         list.clear();
 
         for (int i = 0; i < arraySize; i++) {
-            if (weekType == 0)
+            if (weekType == 1)
                 list.add(new LessonModel(
                         timetableData.lessonsBegin.get(i).get(0) + ":" + timetableData.lessonsBegin.get(i).get(1),
                         timetableData.lessonsEnd.get(i).get(0) + ":" + timetableData.lessonsEnd.get(i).get(1),
@@ -144,10 +144,12 @@ public class TimetableRepository {
      * Checking if the lesson is going now
      */
     private boolean isCurrentLesson(int position) {
-        if ((HOUR * 60 + MINUTE > timetableData.lessonsBeginInMinute.get(position) - 5) &&
-            (HOUR * 60 + MINUTE <= timetableData.lessonsEndInMinute.get(position)) &&
-            (dayInTimetable == TODAY))
+        if ((HOUR * 60 + MINUTE > timetableData.lessonsBeginInMinute.get(position) - 5) &
+                (HOUR * 60 + MINUTE <= timetableData.lessonsEndInMinute.get(position)) &
+                (myCalendar.get(Calendar.DAY_OF_YEAR) == TODAY)) {
             return true;
-        else return false;
+        } else {
+            return false;
+        }
     }
 }

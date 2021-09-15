@@ -26,18 +26,6 @@ public class HomeActivityViewModel extends ViewModel {
     private MutableLiveData<String> weekDay;
     private MutableLiveData<String> number;
 
-    public LiveData<String> getWeekDay() {
-        return weekDay;
-    }
-
-    public LiveData<String> getNumber() {
-        return number;
-    }
-
-    public LiveData<List<LessonModel>> getLessons() {
-        return mLessons;
-    }
-
     public void init(TimetableData timetableData, Context context) {
         if (mLessons != null)
             return;
@@ -71,5 +59,17 @@ public class HomeActivityViewModel extends ViewModel {
         List<LessonModel> currentLessons = getLessons().getValue();
         timeRepo.updateLessons(currentLessons);
         mLessons.postValue(currentLessons);
+    }
+
+    public LiveData<String> getWeekDay() {
+        return weekDay;
+    }
+
+    public LiveData<String> getNumber() {
+        return number;
+    }
+
+    public LiveData<List<LessonModel>> getLessons() {
+        return mLessons;
     }
 }

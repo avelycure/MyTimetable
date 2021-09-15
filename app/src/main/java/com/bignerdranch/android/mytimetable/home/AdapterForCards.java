@@ -58,17 +58,19 @@ public class AdapterForCards extends RecyclerView.Adapter<AdapterForCards.CardVi
         void bind(int position) {
             if (lessonModelsList.get(position).isCurrentLesson())
                 cardViewInHolder.setCardBackgroundColor(context.getResources().getColor(R.color.colorMarkLesson));
+            else
+                cardViewInHolder.setCardBackgroundColor(context.getResources().getColor(R.color.colorAccent));
 
             lessonName.setText(lessonModelsList.get(position).getLessonName());
             time_text1.setText(lessonModelsList.get(position).getBeginTime());
             time_text2.setText(lessonModelsList.get(position).getEndTime());
 
-            RecyclerView.LayoutParams param = (RecyclerView.LayoutParams)itemView.getLayoutParams();
-            if (!lessonModelsList.get(position).getLessonName().equals("")){
+            RecyclerView.LayoutParams param = (RecyclerView.LayoutParams) itemView.getLayoutParams();
+            if (!lessonModelsList.get(position).getLessonName().equals("")) {
                 param.height = CardView.LayoutParams.WRAP_CONTENT;
                 param.width = CardView.LayoutParams.MATCH_PARENT;
                 itemView.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 itemView.setVisibility(View.GONE);
                 param.height = 0;
                 param.width = 0;
