@@ -90,7 +90,7 @@ public class TimetableRepository {
     }
 
     public void setWeekType() {
-        weekType = (myCalendar.get(Calendar.WEEK_OF_YEAR) + 1) % 2;
+        weekType = (myCalendar.get(Calendar.WEEK_OF_YEAR)) % 2;
     }
 
     public int getDayOfWeekNum() {
